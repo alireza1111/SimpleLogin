@@ -24,7 +24,6 @@ namespace SimpleLogin
             services.AddDbContext<LoginContext>(
                 options => options.UseNpgsql(Configuration["ConnectionStrings:UserDb"]),
                     ServiceLifetime.Scoped);
-            services.AddSingleton<IConfiguration>(Configuration);
 
         }
 

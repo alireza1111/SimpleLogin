@@ -5,27 +5,13 @@ using NpgsqlTypes;
 using System;
 using System.Data;
 
-
 namespace SimpleLogin.Models
 {
     public class DbConnection
     {
-        private readonly LoginContext LloginContext;
-        public readonly IConfiguration Configuration;
-
-        public DbConnection(LoginContext db, IConfiguration configuration)
+        public int LoginChek(IConfiguration Configuration, User user)
         {
-            LloginContext = db;
-            configuration = Configuration;
-        }
-
-        public DbConnection()
-        {
-        }
-
-        public int LoginChek(User user)
-        {
-            NpgsqlConnection con = new NpgsqlConnection("User ID=admin;Password=docker;Server=localhost;Port=54321;");  //(Configuration.GetSection("ConnectionStrings").GetSection("UserDb").Value);//new SqlConnection(Configuration["ConnectionStrings:UserDb"]);
+            NpgsqlConnection con = new NpgsqlConnection(Configuration["ConnectionStrings:UserDb"]); 
             using NpgsqlCommand com = new NpgsqlCommand("sp_login", con);
             {
                 com.CommandType = CommandType.StoredProcedure;

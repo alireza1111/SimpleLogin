@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper.Configuration;
+﻿using System.Diagnostics;
 using LoginEntityFramework;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SimpleLogin.Models;
 
@@ -14,12 +10,14 @@ namespace SimpleLogin.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration _configuration;
         DbConnection dbop = new DbConnection();
 
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IConfiguration Configuration)
         {
             _logger = logger;
+            _configuration = Configuration;
         }
 
         public IActionResult Index()
@@ -30,7 +28,7 @@ namespace SimpleLogin.Controllers
         [HttpPost]
         public IActionResult Index([Bind] User user)
         {
-            int res = dbop.LoginChek(user);
+            int res = dbop.LoginChek(_configuration, user);
             if (res == 1)
             {
                 TempData["msg"] = "You are welcome to here!";
