@@ -9,5 +9,6 @@ services:
     environment:
       POSTGRES_PASSWORD: docker
       POSTGRES_USER: admin
+      POSTGRES_DB: admin
     ports:
           - 54321:5432
